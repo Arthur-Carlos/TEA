@@ -1,0 +1,61 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cmath>
+
+using namespace std;
+
+bool compara(const pair<int, int> &v1, const pair<int, int> &v2)
+{
+    return v1.first < v2.first;
+}
+
+int main()
+{
+    int comprimento, largura, entrada, posicao, alcance, novo, tamanho;
+    int atual = 0, X = 0, maior = 0, contador = 0;
+    vector<pair<int, int>> aspersor;
+    cin >> entrada >> comprimento >> largura;
+    for (int i = 0; i < entrada; i++)
+    {
+        cin >> posicao >> alcance;
+        double area = sqrt(alcance * alcance - (largura / 2.0) * (largura / 2.0));
+        aspersor[0].first = posicao - area;
+        aspersor[0].second = posicao + area;
+        aspersor.push_back(aspersor[0]);
+    }
+    sort(aspersor.begin() + 1, aspersor.end(), compara);
+    tamanho = aspersor.size();
+    while (X < 1)
+    {
+        novo = atual;
+        for (int j = 1; j < tamanho; j++)
+        {
+            if (aspersor[j].first > atual)
+            {
+                break;
+            }
+            if (aspersor[j].second >= novo)
+            {
+                novo = aspersor[j].second;
+                maior = j;
+            }
+        }
+        if (maior == 0)
+        {
+            break;
+        }
+        contador++;
+        X = atual = novo;
+    }
+    if (X < 1)
+    {
+        cout << "-1";
+    }
+    else
+    {
+        cout << contador;
+    }
+
+    return 0;
+}
