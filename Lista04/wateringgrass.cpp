@@ -12,9 +12,11 @@ bool compara(const pair<double, double> &v1, const pair<double, double> &v2)
 
 int main()
 {
+    ios::sync_with_stdio(false);
     int entrada, comprimento, largura;
     while (cin >> entrada >> comprimento >> largura)
     {
+        bool impossible = false;
         vector<pair<double, double>> aspersor;
 
         for (int i = 0; i < entrada; i++)
@@ -25,8 +27,8 @@ int main()
             if (alcance * 2 <= largura)
                 continue;
 
-            double area = sqrt(alcance * alcance - (largura / 2.0) * (largura / 2.0));
-            aspersor.push_back({posicao - area, posicao + area});
+            double pythagoras = sqrt(alcance * alcance - (largura / 2.0) * (largura / 2.0));
+            aspersor.push_back({posicao - pythagoras, posicao + pythagoras});
         }
 
         sort(aspersor.begin(), aspersor.end(), compara);
@@ -47,14 +49,22 @@ int main()
 
             if (max_reach == atual)
             {
-                cout << -1 << "\n";
-                return 0;
+                impossible = true;
+                break;
             }
 
             contador++;
             atual = max_reach;
         }
-        cout << contador << "\n";
+        if (impossible)
+        {
+            cout << -1 << "\n";
+        }
+        else
+        {
+            cout << contador << "\n";
+        }
     }
     return 0;
 }
+
