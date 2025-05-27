@@ -4,9 +4,11 @@
 #include <string>
 using namespace std;
 
-bool comparador(const pair<int, int>& a, const pair<int, int>& b) {
-    if(a.second == b.second){
-        return a.first > b.first;
+bool comparador(const pair<int, int> &a, const pair<int, int> &b)
+{
+    if (a.second >= b.second)
+    {
+        return a.first < b.first;
     }
     return a.second > b.second;
 }
@@ -14,8 +16,7 @@ bool comparador(const pair<int, int>& a, const pair<int, int>& b) {
 int main()
 {
     ios::sync_with_stdio(false);
-    int cursos, semanas, cargaHora, valor, soma = 0, contador;
-
+    int cursos, semanas, cargaHora, valor, soma = 0, contador = 0;
 
     cin >> cursos >> semanas;
 
@@ -27,13 +28,15 @@ int main()
         total.emplace_back(cargaHora, valor);
     }
 
-    sort(total.begin(), total.end(),comparador);
-
+    sort(total.begin(), total.end(), comparador);
     for (const auto &cliente : total)
     {
-        soma += cliente.first;
-        contador = max(contador, soma);
+        if (cliente.first > contador)
+        {
+            soma += cliente.second;
+            contador++;
+        }
     }
-    
+    cout << soma << endl;
     return 0;
 }

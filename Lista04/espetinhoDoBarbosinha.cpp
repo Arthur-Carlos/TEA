@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <string>
+
 using namespace std;
 
 int tempoParaSegundos(int h, int m, int s)
@@ -13,15 +14,14 @@ bool comparador(const pair<int, int> &a, const pair<int, int> &b)
 {
     if (a.first == b.first)
     {
-        return a.second < b.second;
+        return a.second > b.second;
     }
     return a.first < b.first;
 }
 
 int main()
 {
-    ios::sync_with_stdio(false);
-    int entrada, cadeiras = 0, contador = 0;
+    int entrada;
     int chegada, ent_hora, ent_minuto, ent_segundos; // deixei separado pra ficar bonitinho mesmo
     int saida, sai_hora, sai_minuto, sai_segundos;
 
@@ -43,6 +43,7 @@ int main()
 
     sort(clientes.begin(), clientes.end(), comparador);
 
+    int  cadeiras = 0, contador = 0;
     for (const auto &cliente : clientes)
     {
         cadeiras += cliente.second;
