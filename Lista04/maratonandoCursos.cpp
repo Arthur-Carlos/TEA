@@ -6,9 +6,9 @@ using namespace std;
 
 bool comparador(const pair<int, int> &a, const pair<int, int> &b)
 {
-    if (a.second >= b.second)
+    if (a.second == b.second)
     {
-        return a.first < b.first;
+        return a.first > b.first;
     }
     return a.second > b.second;
 }
@@ -16,12 +16,12 @@ bool comparador(const pair<int, int> &a, const pair<int, int> &b)
 int main()
 {
     ios::sync_with_stdio(false);
-    int cursos, semanas, cargaHora, valor, soma = 0, contador = 0;
+    int cursos, semanas, cargaHora, valor, soma = 0, contador = 0, tamanho;
 
     cin >> cursos >> semanas;
 
     vector<pair<int, int>> total;
-
+    vector<bool> tempoDisp(semanas + 1, false);
     for (int i = 0; i < cursos; ++i)
     {
         cin >> cargaHora >> valor;
@@ -29,6 +29,7 @@ int main()
     }
 
     sort(total.begin(), total.end(), comparador);
+
     for (const auto &cliente : total)
     {
         if (cliente.first > contador)
