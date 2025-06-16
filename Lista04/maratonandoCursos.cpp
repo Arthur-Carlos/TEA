@@ -1,43 +1,41 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <string>
 using namespace std;
 
-bool comparador(const pair<int, int> &a, const pair<int, int> &b)
-{
-    if (a.second == b.second)
-    {
-        return a.first > b.first;
-    }
-    return a.second > b.second;
+struct Curso {
+    int prazo;
+    int valor;
+};
+
+bool comparaPrazo(const Curso &a, const Curso &b) {
+    return a.prazo < b.prazo;
 }
 
-int main()
-{
-    ios::sync_with_stdio(false);
-    int cursos, semanas, cargaHora, valor, soma = 0, contador = 0, tamanho;
-
+int main() {
+    int cursos, semanas;
     cin >> cursos >> semanas;
 
-    vector<pair<int, int>> total;
-    vector<bool> tempoDisp(semanas + 1, false);
-    for (int i = 0; i < cursos; ++i)
-    {
-        cin >> cargaHora >> valor;
-        total.emplace_back(cargaHora, valor);
+    vector<Curso> lista(cursos);
+    for (int i = 0; i < cursos; ++i) {
+        cin >> lista[i].prazo >> lista[i].valor;
     }
 
-    sort(total.begin(), total.end(), comparador);
+    sort(lista.begin(), lista.end(), comparaPrazo);
+    vector<bool> semanaOcupada(semanas + 1, false); 
 
-    for (const auto &cliente : total)
-    {
-        if (cliente.first > contador)
-        {
-            soma += cliente.second;
-            contador++;
+    int totalConhecimento = 0;
+
+    for (const auto &curso : lista) {
+        for (int semana = curso.prazo; semana >= 1; --semana) {
+            if (!semanaOcupada[semana]) {
+                semanaOcupada[semana] = true;
+                totalConhecimento += curso.valor;
+                break;
+            }
         }
     }
-    cout << soma << endl;
+
+    cout << totalConhecimento << "\n";
     return 0;
 }
