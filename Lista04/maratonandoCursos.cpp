@@ -9,6 +9,9 @@ struct Curso {
 };
 
 bool comparaPrazo(const Curso &a, const Curso &b) {
+    if(a.prazo == b.prazo){
+        return a.valor > b.valor;
+    }
     return a.prazo < b.prazo;
 }
 
