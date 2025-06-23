@@ -4,88 +4,83 @@
 #include <string>
 using namespace std;
 
-struct Info
+struct Tupla
 {
-    int saldo;
-    int minPrefixo;
+    int quebra;
+    int totalContador;
 };
-
-Info calculaInfo(const string &s)
-{
-    int saldo = 0, minSaldo = 0;
-    for (char c : s)
-    {
-        if (c == '(')
-            saldo++;
-        else
-            saldo--;
-        minSaldo = min(minSaldo, saldo);
-    }
-    return {saldo, minSaldo};
-}
 
 int main()
 {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-
     int entrada;
     cin >> entrada;
+    vector<Tupla> positivo, negativo;
+    string s;
 
-    vector<pair<Info, string>> positivos, negativos;
-
-    for (int i = 0; i < entrada; ++i)
+    for (int i = 0; i < entrada; i++)
     {
-        string s;
         cin >> s;
-        Info info = calculaInfo(s);
-
-        if (info.saldo >= 0)
+        int contador = 0, x = 0;
+        for (char c : s)
         {
-            positivos.emplace_back(info, s);
+            if (c == '(')
+            {
+                contador++;
+            }
+            else
+            {
+                contador--;
+            }
+            x = min(x, contador);
         }
+        Tupla tupla = {-x, contador};
+        if (contador >= 0)
+        {
+            positivo.push_back(tupla);
+        }
+
         else
         {
-            negativos.emplace_back(info, s);
+            negativo.push_back(tupla);
         }
     }
 
-    sort(positivos.begin(), positivos.end(), [](const auto &a, const auto &b)
-         { return a.first.minPrefixo > b.first.minPrefixo; });
+    sort(positivo.begin(), positivo.end(), [](const Tupla &a, const Tupla &b)
+         { return a.quebra < b.quebra; });
 
-    sort(negativos.begin(), negativos.end(), [](const auto &a, const auto &b)
-         { return (b.first.minPrefixo - b.first.saldo) < (a.first.minPrefixo - a.first.saldo); });
+    sort(negativo.begin(), negativo.end(), [](const Tupla &a, const Tupla &b)
+         { return a.quebra > b.quebra; });
 
-    int saldoTotal = 0;
+    int total = 0;
+    bool ok = true;
 
-    for (auto &p : positivos)
+    for (auto tupla : positivo)
     {
-        if (saldoTotal + p.first.minPrefixo < 0)
+        if (total < tupla.quebra)
         {
-            cout << "No\n";
-            return 0;
+            ok = false;
+            break;
         }
-        saldoTotal += p.first.saldo;
+        total += tupla.totalContador;
     }
 
-    for (auto &p : negativos)
+    if (ok)
     {
-        if (saldoTotal + p.first.minPrefixo < 0)
+        for (auto tupla : negativo)
         {
-            cout << "No\n";
-            return 0;
+            if (total < tupla.quebra)
+            {
+                ok = false;
+                break;
+            }
+            total += tupla.totalContador;
         }
-        saldoTotal += p.first.saldo;
     }
 
-    if (saldoTotal == 0)
-    {
+    if (ok && total == 0)
         cout << "Yes\n";
-    }
     else
-    {
         cout << "No\n";
-    }
 
     return 0;
 }
