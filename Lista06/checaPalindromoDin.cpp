@@ -7,12 +7,12 @@ using namespace std;
 
 int matriz[MAX][MAX];
 string str, copia;
-int esq, dir;
+int esq, dir; //reutilizei os nomes da versao que nao funcionou
 
 void checaPalindromoDinamico(string str)
 {
     copia = string(str.rbegin(), str.rend()); // copia recebe o reverso
-    esq = str.size(), dir = copia.size();     // os antigos ponteiros recebem o tamanho de cada string
+    esq = str.size(), dir = copia.size();
     // fazendo as matrizes
     for (int i = 0; i <= esq; i++)
     {

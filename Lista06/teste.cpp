@@ -1,50 +1,29 @@
 #include <iostream>
 #include <string>
-#include <cmath>
 
-#define MAX 1001
+#define MAX 300
+
 using namespace std;
-
-int matriz[MAX][MAX];
-string str, copia;
-int esq, dir;
-
-void checaPalindromoDinamico(string str)
-{
-    copia = string(str.rbegin(), str.rend()); // copia recebe o reverso
-    esq = str.size(), dir = copia.size();     // os antigos ponteiros recebem o tamanho de cada string
-    // fazendo as matrizes
-    for (int i = 0; i <= esq; i++)
-    {
-        matriz[i][0] = i;
-    }
-    for (int i = 0; i <= dir; i++)
-    {
-        matriz[0][i] = i;
-    }
-    // percorre a matriz
-    for (int i = 1; i <= esq; i++)
-    {
-        for (int j = 1; j <= dir; j++)
-        {
-            if (str[i - 1] == copia[j - 1])
-            {
-                matriz[i][j] = matriz[i - 1][j - 1];
-            }
-            else
-            {
-                // matriz vai receber o menor entre as matrizes +1 do custo da operacao
-                matriz[i][j] = min(min(matriz[i - 1][j], matriz[i][j - 1]), matriz[i - 1][j - 1]) + 1; // formula do bagulho
-            }
-        }
-    }
-
-    cout << matriz[esq][dir] / 2 << endl; // esqueci o porque disso, mas o professor explicou que e o correto.
-}
 
 int main()
 {
-    cin >> str;
-    checaPalindromoDinamico(str);
-    return 0;
+    int entrada, N[MAX], i, prim, seg;
+    double matriz[MAX][MAX];
+    for (i = 0; i < entrada; i++)
+    {
+        for (int j = 0; j < entrada; j++)
+        {
+            cin >> matriz[i][j];
+        }
+    }
+    for (i = 0; i < entrada; i++)
+    {
+        cin >> N[i];
+    }
+    for (i = 0; i < entrada; i++)
+    {
+        cin >> prim >> seg;
+        
+    }
+    
 }
